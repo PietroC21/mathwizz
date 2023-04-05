@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Math Wiz</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../static/styles.css">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!--Nav bar built using bootstrap https://bootstrap-menu.com/_bootstrap4/detail-animation.html-->
+  </head>
+  <body>
+    {% if session.logged_in %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+      <a class="navbar-brand" href="#">MathWizz</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="main_nav">
+    
+     <ul class="navbar-nav">
+      <li class="nav-item active"> <a class="nav-link" href="/">Home </a> </li>
+      <li class="nav-item"><a class="nav-link" href="#"> History </a></li>
+      <li class="nav-item dropdown">
+          <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">  Problem Types </a>
+          <ul class="dropdown-menu fade-up">
+          <li><a class="dropdown-item" href="/calculus">Calculus</a></li>
+          <li><a class="dropdown-item" href="/geometry">Geometry</a></li>
+          <li><a class="dropdown-item" href="/algebra">Algebra</a></li>
+          </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+    </ul>   
+      </div> <!-- navbar-collapse.// -->
+    </nav>
+    <div class="container">
+        <div class ="row">
+            <div class="col-sm-12 py-4 text-center">
+            <h1 class="writing">Welcome to MathWizz's Geometry Solver!</h1>
+            <div class="d-flex justify-content-center align-items-center">
+            <div class="d-flex flex-column boxb">
+              <h1 class="writing">What Geometry Problems do you want to Solve?</h1>
+              <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/geometry/area'">Area</button></p>
+              <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/'">Go Back Home</button></p>
+                </div>
+            </div>
+    </div>
+    {% else %}
+      <script>
+            window.location.href = "/login";
+        </script>
+    {% endif %}
+  </body>
+</html>

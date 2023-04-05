@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Math Wiz</title>
+    <link rel ="stylesheet" href="../static/styles.css">
+  </head>
+  <body>
+    {% if session.logged_in %}
+      <p>Welcome, {{ session.email }}!</p>
+    <h1>{{result }}</h1>
+    {% else %}
+      <script>
+            window.location.href = "/login";
+        </script>
+    {% endif %}
+  </body>
+</html>

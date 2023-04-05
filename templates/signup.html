@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../static/styles.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js%22%3E"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js%22%3E"></script>
+</head>
+<body>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Warning!</strong> {{message}}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<div class="container">
+  <div class ="row">
+    <div class="col-sm-12 py-4 text-center">
+    <div class="d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-column boxb">
+  <form action="/registeruser" method ="POST">
+    <div class="d-flex flex-column">
+      <p class="writing">Firstname:</p><input type="text" name="FirstName">
+    </div>
+    <div class="d-flex flex-column">
+      <p class="writing">Lastname:</p><input type="text" name="LastName">
+    </div>
+    <div class="d-flex flex-column">
+      <p class="writing">Username:</p><input type="text" name="Username">
+    </div>
+    <div class="d-flex flex-column">
+      <p class="writing">Password:</p><input type="text" name="Password" minlength="8" required/></br>
+    </div>
+    <div class="d-flex flex-column">
+      <p class="writing">Email:</p><input type="text" name="Email"/>
+    </div>
+    <div class="d-flex flex-column">
+      <p class="writing">Age:</p><input type="text" name="Age"/>
+    </div>
+    
+    <div class="d-flex flex-column">
+      <p class="writing">Role:</p>
+    <input type="radio" name="Role" value="PremiumUser">Premium<br>
+    <input type="radio" name="Role" value="User" checked>Regular<br>
+    </div>
+    <div class="d-flex flex-column">
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+  </div>
+  </div>
+  </div>
+  </div>
+</body>
+</html>

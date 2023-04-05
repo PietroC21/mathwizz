@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Math Wiz</title>
+      <link rel ="stylesheet" href="../static/styles.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          processEscapes: true,
+          packages: ['base', 'ams']
+        },
+        svg: {
+          fontCache: 'global'
+        },
+        startup: {
+          input: 'tex',
+          output: 'svg',
+          ready: function () {
+            MathJax.startup.defaultReady();
+            var math = document.getElementsByTagName('math');
+            for (var i = 0; i < math.length; i++) {
+              MathJax.typesetPromise([math[i]]);
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    {% if session.user_type != "Premium" %}
+      <script>
+        window.location.href = "/";
+      </script>
+    {% endif %}
+
+    {% if session.logged_in %}
+      <p>Welcome, {{ session.email }}!</p>
+      <h1><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">{{ result|safe }}</math></h1>
+    {% else %}
+      <script>
+            window.location.href = "/login";
+        </script>
+    {% endif %}
+  </body>
+</html>

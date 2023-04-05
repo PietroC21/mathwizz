@@ -1,0 +1,47 @@
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="../static/styles.css">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </head>
+  
+  <body class="d-flex justify-content-center align-items-center">
+    {% if session.logged_in %}
+    <p>You are already logged in, logout to log back in {{ session.email }}!</p>
+    <p><a href="/logout">Logout</a></p>
+    {% else %}
+      <div class="d-flex flex-column boxa">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible fade show" role="warning">
+                <strong>Warning!</strong> {{message}}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+              {% endfor %}
+            {% endif %}
+            {% endwith %}
+            
+        <h1 class="writing">Welcome to MathWizz</h1>
+            <form  method = "POST">
+            <div class="d-flex flex-column">
+              <p class="writing">Email:</p><input type="text" name="email">
+            </div>
+            <div class="d-flex flex-column">
+              <p class="writing">Password:</p><input type="text" name="password">
+            </div>
+            <div class="d-flex flex-row justify-content-between mt-3">
+            <button type="submit" class="btn btn-primary" formaction="/loginuser">Log In</button>
+            <button type="submit" class="btn btn-primary" formaction="/signup">Sign Up</button>
+          </div>
+            </form>
+    </div>
+    {% endif %}
+    
+  </body>
+</html>
