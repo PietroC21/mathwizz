@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+{% extends "navbar.html" %}
+<body>
+{% block content %}
+{% if session.logged_in %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning" role="alert">
+                <strong>Warning!</strong> {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="container">
+    <div class ="row">
+      <div class="col-sm-12 py-4 text-center">
+      <h1 class="writing">Welcome to MathWizz!</h1>
+      <div class="d-flex justify-content-center align-items-center">
+      <div class="d-flex flex-column boxb">
+
+        <form action="/deleteUser" method = "POST">
+                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+                Email of User:<input type="email" name="email"></input><br>
+                <button type="submit" class="btn btn-primary">Submit</button><br>
+        </form>
+      </div>
+             </div>
+          </div>
+      </div>
+  </div>
+{% else %}
+<script>
+    window.location.href = "/login";
+</script>
+{% endif %}
+{% endblock %}
+</body>
+</html>

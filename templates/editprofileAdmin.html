@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  {% extends "navbar.html" %}
+  <body>
+    {% block content %}
+    {% if session.logged_in %}
+    {% if a == 'Admin' %}
+    <style>
+      form  { 
+      display: flex;     
+      flex-direction: column;
+     }
+    
+     p{
+       display: flex;  
+       flex-direction: row;
+       align-items: center;
+      }
+  
+    label 
+    { 
+    flex: 1;
+   }
+
+   input { 
+    flex: 2; 
+  }
+
+  </style>
+<body>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Warning!</strong> {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<div class="container">
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <form action="/modifyprofile" method = "POST">
+      <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+      <div class="form-group">
+        <p class="writing">
+          <label for="FirstName">Edit First Name:</label>
+          <input type="text" name="FirstName" placeholder="Enter First Name">
+        </p>
+      </div>
+  <div class="form-group">
+    <p class="writing">
+      <label for="LastName">Edit Last Name:</label>
+      <input type="text" placeholder="Enter LastName" name="LastName"></p>
+  </div>
+ <div class="form-group">
+    <p class="writing">
+      <label for="Username">Edit Username:</label>
+    <input type="text" placeholder="Enter Username" name="Username"></p>
+  </div>
+ <div class="form-group">
+    <p class="writing">
+      <label for="Password">Edit Password:</label>
+    <input type="text" placeholder="Enter Password" name="Password" minlength="8" required/></p>
+  </div>
+ <div class="form-group">
+    <p class="writing">
+      <label for="Email">Edit Email:</label>
+      <input type="email" placeholder="Enter Email" name="Email"/></p>
+  </div>
+ <div class="form-group">
+    <p class="writing"> 
+      <label for="Age">Edit Age:</label>
+      <input type="number"  placeholder="Enter Age" name="Age"/></p>
+
+
+
+<div class="form-group text-center">
+  <button type="submit">Submit</button>
+      </div>
+    </form>
+    <br><br></br></br>
+    <p class="writing">
+    <label>Admin Edit:</label>
+    <select id="redirect-select">
+      <option value=''>[Select]</option>
+      <option value="/modifyuser">Edit Another User</option>
+      <option value="/upgradeuser">Upgrade Another User</option>
+      <option value="/downgradeuser">Downgrade a User</option>
+      <option value="/grantadmin">Grant Admin Access to User</option>
+      <option value="/revokeadmin">Revoke your own admin access</option>
+    </select>
+    </p>
+    <script>
+        // Get the select element
+        var select = document.getElementById('redirect-select');
+
+        // Add an event listener for when the user selects an option
+        select.addEventListener('change', function() {
+        // Get the selected option value
+        var selectedValue = this.value;
+
+        // If a value is selected, redirect to that page
+        if (selectedValue !== '') {
+            window.location.href = selectedValue;
+        }
+        });
+    </script>
+    </div>
+    </div>
+</div>
+ 
+   
+    {% endif %}
+  {% else %}
+    <script>
+          window.location.href = "/login";
+      </script>
+  {% endif %}
+  {% endblock %}
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+{% extends "navbar.html" %}
+<body>
+    {% block content %}
+{% if session.logged_in %}
+
+<div class="container">
+    <div class ="row">
+      <div class="col-sm-12 py-4 text-center">
+      <h1 class="writing">Welcome to MathWizz!</h1>
+      <div class="d-flex justify-content-center align-items-center">
+      <div class="d-flex flex-column boxb">
+        <form action="/removeadmin" method = "POST">
+                <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+                <label for="Role">Choose a Role:</label>
+                    <select name="Role" id="Role">
+                        <option value="User">User</option>
+                        <option value="Premium">Premium</option>
+                    </select>
+                    <br></br>
+                    <button type="submit" class="btn btn-primary">Submit</button><br>
+
+        </form>
+      </div>
+             </div>
+          </div>
+      </div>
+  </div>
+{% else %}
+<script>
+    window.location.href = "/login";
+</script>
+{% endif %}
+{% endblock %}
+</body>
+</html>
+
+

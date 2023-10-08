@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  {% extends "navbar.html" %}
+  <body>
+    {% block content %}
+    {% if session.logged_in %}
+    <style>
+      form  { 
+      display: flex;     
+      flex-direction: column;
+        }
+     p{
+       display: flex;  
+       flex-direction: row;
+       align-items: center;
+      }
+    label 
+    { 
+    flex: 1;
+   }
+   input { 
+    flex: 2; 
+  }
+  </style>
+<body>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Warning!</strong> {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+ 
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+        <form action="/modifyprofile" method ="POST">
+           <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+        <div class="form-group">
+          <p class="writing">
+            <label for="FirstName">First Name:</label>
+            <input type="text" name="FirstName" placeholder="Enter First Name">
+          </p>
+        </div>
+        <div class="form-group">
+          <p class="writing">
+            <label for="LastName">Last Name:</label>
+            <input type="text" placeholder="Enter LastName" name="LastName"></p>
+        </div>
+       <div class="form-group">
+          <p class="writing">
+            <label for="Username">Username:</label>
+          <input type="text" placeholder="Enter Username" name="Username"></p>
+        </div>
+       <div class="form-group">
+          <p class="writing">
+            <label for="Password">Password:</label>
+          <input type="text" placeholder="Enter Password" name="Password" /></p>
+        </div>
+       <div class="form-group">
+          <p class="writing">
+            <label for="Email">Email:</label>
+            <input type="text" placeholder="Enter Email" name="Email"/></p>
+        </div>
+       <div class="form-group">
+          <p class="writing"> 
+            <label for="Age">Age:</label>
+            <input type="number"  placeholder="Age must be greater than 13" name="Age"  min="13" value="'13"/></p>
+        </div>
+      <div class="form-group text-center">
+        <button type="submit">Submit</button>
+                </div>
+            </form>
+
+{% if a == 'Premium' %}
+<form action="/downgrade" method="POST">
+    <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+    <button type="submit" class="btn btn-primary">Downgrade</button>
+</form>  
+{% elif a == 'User' %}
+<form action="/upgrade" method="POST">
+  <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+  <button type="submit" class="btn btn-primary">Upgrade</button>
+</form>  
+{% endif %}
+</div>
+</div>
+</div> 
+  {% else %}
+    <script>
+          window.location.href = "/login";
+      </script>
+  {% endif %}
+  {% endblock %}
+</body>
+</html>

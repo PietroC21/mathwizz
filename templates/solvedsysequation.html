@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Math Wiz</title>
-    <link rel ="stylesheet" href="../static/styles.css">
-  </head>
+  {% extends "navbar.html" %}
   <body>
+    {% block content %}
     {% if session.logged_in %}
-      <p>Welcome, {{ session.email }}!</p>
-    <h1>{{result }}</h1>
+   
+    <div class="container">
+      <div class="container">
+        <div class ="row">
+            <div class="col-sm-12 py-4 text-center">
+            <div class="d-flex justify-content-center align-items-center">
+            <div class="d-flex flex-column boxb">
+              <h1><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">{{ result|safe }}</math></h1>
+              <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/algebra/sysequation'">Another System of Equation?</button></p>
+              <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/algebra'">Different Algebra Problem</button></p>
+              <p><button type="home" class="btn btn-primary btn-lg" onclick="window.location.href='/'">Go Back Home</button></p>
+                </div>
+            </div>
+   
     {% else %}
       <script>
             window.location.href = "/login";
         </script>
     {% endif %}
+    {% endblock %}
   </body>
 </html>

@@ -13,42 +13,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel ="stylesheet" href="{{ url_for('static', filename='styles.css')}}"> 
-
   </head>
-    {% extends "navbar.html" %}
-    <body>
+<body>
+  {% extends "navbar.html" %}
+  <body>
     {% block content %}
-    {% if session.logged_in %}
     {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-danger alert-dismissible fade show" role="danger">
-                <strong>Warning!</strong> {{message}}
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            </div>
-              {% endfor %}
-            {% endif %}
-            {% endwith %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Warning!</strong> {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% endwith %}
+    {% if session.logged_in %}
     <div class="container">
       <div class ="row">
-          <div class="col-sm-12 py-4 text-center">
-          <h1 class="writing">Welcome to MathWizz: {{ session.email }}</h1>
-          <div class="d-flex justify-content-center align-items-center">
-          <div class="d-flex flex-column boxb">
-            <h1 class="writing">What Problems do you want to Solve?</h1>
-            <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/calculus'">Calculus</button></p>
-            <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/geometry'">Geometry</button></p>
-            <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/algebra'">Algebra</button></p>
-          </div>
-          </div>
+        <div class="col-sm-12 py-4 text-center">
+        <h1 class="writing">Welcome to MathWizz!</h1>
+        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex flex-column boxb">
+          <form action="/performuserdowngrade" method = "POST">
+                  <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+                  Email to downgrade:<input type="text" name="email"></input><br>
+                  <button type="submit" class="btn btn-primary">Submit</button><br>
+              </form>
+        </div>
+               </div>
+            </div>
+        </div>
     </div>
     {% else %}
       <script>
             window.location.href = "/login";
         </script>
-    {% endif %}
-    {%if error%}
-     <div class="error">{{error}}</div>
     {% endif %}
     {% endblock %}
   </body>

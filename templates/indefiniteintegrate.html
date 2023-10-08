@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% extends "navbar.html" %}
+  <body>
+    {% block content %}
+    {% if session.logged_in %}
+   
+    <div class="container">
+        <div class ="row">
+            <div class="col-sm-12 py-4 text-center">
+            <h1 class="writing">Welcome to MathWizz!</h1>
+            <div class="d-flex justify-content-center align-items-center">
+            <div class="d-flex flex-column boxb">
+                <h1 class="writing">Indefinite Integral Solver</h1>
+                <h5 class="writing">Currently this application can only solve integrals in the form of the variable
+                x and only single integration. No double or triple Integration.
+                For integrals with fractional exponents enter it as demonstrated in the example below:<br>
+                Example: x^(1/2)+5x^(-1/2)<br><br></h5>
+                <form action="/calculus/solveintegral" method = "POST">
+                    <div class="d-flex flex-column">
+                      <label for="expression"><font size="+2">Enter an Indefinite Integral: </font></label>
+                      <div>
+                        <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+                          <span><font size="+2">&#8747;</font></span>
+                          <input type="text" id="expression" name="expression" required><font size="+2">dx</font>
+                     </div>
+                     <br>
+                    </div>
+                    <p><br><button type="submit"class="btn btn-primary btn-lg">Solve</button></p>
+                    </form>
+                    <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/calculus/integration'">Back To Integration Menu</button></p>
+                    <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/'">Go Back Home</button></p>
+                    {%if error%}
+                    {% if error == 500 %}
+                      <div class="error">Invalid Input or Integral not supported by System. Try Again</div>
+                    {% else %}
+                     <div class="error">{{error}}</div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+    </div>
+    {% else %}
+    <script>
+        window.location.href = "/login";
+    </script>
+    {% endif %}
+    {% endblock %}
+  </body>
+</html>

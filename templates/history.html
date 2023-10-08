@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel ="stylesheet" href="{{ url_for('static', filename='styles.css')}}"> 
+  </head>
+
+    {% extends "navbar.html" %}
+    <div class="body2">
+      {% block content %}
+      
+
+      {% if session.logged_in  %}
+      {% if a == 'None'  %}
+      {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Warning!</strong> {{message}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+{% endif %}
+      
+
+      {% if a != 'None'   %}
+      {% if a == 'Premium'  or a == 'admin'  %}
+      <table border = 10>
+        <thead>
+           <td><h1>Calculus</h1></td>
+        </thead>
+        {% for problem in problems %}
+          {% if problem['Calculus'] %}
+            <tr>
+                <td><h1><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">{{ problem['Calculus'] | safe }}</math></h1></td>
+            </tr>
+          {% endif %}
+      {% endfor %}
+      {% endif %}
+      </table>
+      
+      <table border = 10>
+        <thead>
+          <td><h1>Algebra</h1></td>
+        </thead>
+
+        {% for problem in problems %}
+        {% if problem['Algebra'] %}
+            <tr>
+                <td><h1><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">{{ problem['Algebra'] | safe }}</math></h1></td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+  </table>
+
+    <table border = 10>
+      <thead>
+        <td><h1>Geometry</h1></td>
+      </thead>
+
+      {% for problem in problems %}
+      {% if problem['Geometry'] %}
+          <tr>
+              <td><h1><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">{{ problem['Geometry'] | safe }}</math></h1></td>
+          </tr>
+      {% endif %}
+  {% endfor %}
+      {% endif %}
+    </table>
+      {% if a == 'admin' %}
+       <p><button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/userHistory'">User Probelms</button></p>
+      {% endif %}
+      {% endif %}
+    
+      
+
+
+      {% endblock %}
+  </div>
+  </html>

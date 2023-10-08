@@ -3,6 +3,7 @@
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      
       <!-- Bootstrap CSS -->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
@@ -34,76 +35,88 @@
   
      input { 
       flex: 2; 
-    }
-
+     }
     </style>
+{% extends "navbar.html" %}
 <body>
-  
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Warning!</strong> {{message}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    {% endfor %}
-  {% endif %}
+{% block content %}
+{% if session.logged_in %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Warning!</strong> {{message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endfor %}
+{% endif %}
 {% endwith %}
+
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-6">
-    <form action="/registeruser" method ="POST">
+    <form action="/changeuser" method ="POST">
        <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
     <div class="form-group">
       <p class="writing">
-        <label for="FirstName">First Name:</label>
-        <input type="text" name="FirstName"  placeholder="Enter First Name">
+        <label for="originalemail">Enter email of user:</label>
+        <input type="text" name="originalemail"  placeholder="Enter Original Email ">
       </p>
     </div>
     <div class="form-group">
       <p class="writing">
-        <label for="LastName">Last Name:</label>
-        <input type="text" placeholder="Enter LastName" name="LastName"></p>
-    </div>
-   <div class="form-group">
-      <p class="writing">
-        <label for="Username">Username:</label>
+        <label for="Username">Edit Username:</label>
       <input type="text" placeholder="Enter Username" name="Username"></p>
     </div>
-   <div class="form-group">
+
+    <div class="form-group">
       <p class="writing">
-        <label for="Password">Password:</label>
-      <input type="text" placeholder="Enter Password" name="Password" minlength="8" required/></p>
-    </div>
-   <div class="form-group">
-      <p class="writing">
-        <label for="Email">Email:</label>
+        <label for="Email">Edit Email:</label>
         <input type="email" placeholder="Enter Email" name="Email"/></p>
     </div>
-   <div class="form-group">
+
+    <div class="form-group">
       <p class="writing"> 
-        <label for="Age">Age:</label>
+        <label for="Age">Edit Age:</label>
         <input type="number"  placeholder="Age must be greater than 13" name="Age"  min="13" value="'13"/></p>
     </div>
     
+    <div class="form-group">
+      <p class="writing">
+        <label for="LastName">Edit First Name:</label>
+        <input type="text" placeholder="Enter FirstName" name="LastName"></p>
+    </div>
+
+    <div class="form-group">
+      <p class="writing">
+        <label for="LastName">Edit Last Name:</label>
+        <input type="text" placeholder="Enter LastName" name="LastName"></p>
+    </div>
+
+  
+    
    <div class="form-group">
-      <p class="writing">Role:
-    <input type="radio" name="Role" value="Premium"> Premium
-    <input type="radio" name="Role" value="User" checked>Regular
-      </p>  
-  </div>
+      <p class="writing">
+        <label for="Password">Change Password:</label>
+      <input type="text" placeholder="Enter Password" name="Password" /></p>
+    </div>
+
+   
   <div class="form-group text-center">
     <button type="submit">Submit</button>
-    
-    <div class="form-group text-center">
-    <button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/login'">Back To Sign In</button>
-    </div>
-  </div>
-  </form>
+      </div>
+    </form>
   </div>
   </div>
-  </div>
+</div>
+{% else %}
+<script>
+    window.location.href = "/login";
+</script>
+{% endif %}
+{% endblock %}
 </body>
 </html>

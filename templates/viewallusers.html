@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <title> Math Wizz</title>
+  <link rel ="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>
+<script type="text/javascript">
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      processEscapes: true,
+      packages: ['base', 'ams']
+    },
+    svg: {
+      fontCache: 'global'
+    },
+    startup: {
+      input: 'tex',
+      output: 'svg',
+      ready: function () {
+        MathJax.startup.defaultReady();
+        var math = document.getElementsByTagName('math');
+        for (var i = 0; i < math.length; i++) {
+          MathJax.typesetPromise([math[i]]);
+        }
+      }
+    }
+  };
+</script>
+  <body>
+    {% if session.logged_in %}
+    <div class="container">
+      <div class ="row">
+          <div class="col-sm-12 py-4 text-center">
+          <h1 class="writing">Welcome to MathWizz!</h1>
+          <div class="d-flex justify-content-center align-items-center">
+            <div class="d-flex justify-content-center align-items-center">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th colspan="2"><h2 class="writing">View Profile</h2></th>
+              </tr>
+            </thead>
+                  <tbody>
+                      {% for user, claim_keys in zip(users.values(), list_of_claims) %}
+                      {% set claim = list(claim_keys)[0] %}
+                      <tr>
+                          <td scope="row"><p class="writing">Username:</p></td>
+                          <td><h2 class="writing">{{ user['Username'] }}</p></td>
+                          <td scope="row"><p class="writing">Email:</p></td>
+                          <td><p class="writing">{{ user['Email'] }}</p></td>
+                          <td scope="row"><p class="writing">Age:</p></td>
+                          <td><p class="writing">{{ user['Age'] }}</p></td> 
+                          <td scope="row"><p class="writing">FirstName:</p></td>
+                          <td><p class="writing">{{ user['FirstName'] }}</p></td>
+                          <td scope="row"><p class="writing">LastName:</p></td>
+                          <td><p class="writing">{{ user['LastName'] }}</p></td> 
+                          <td scope="row"><p class="writing"> UserType:</p></td>
+                          <td><p class="writing">{{claim}}</p></td>
+                      </tr>                      
+                      {% endfor %}
+                      
+                  </tbody>
+              </table class="table table-bordered">
+            </div>
+          </div>
+        </div>
+      
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='/'">Go Back Home</button>
+</div>
+    {% else %}
+      <script>
+            window.location.href = "/login";
+        </script>
+    {% endif %}
+  </body>
+</html>

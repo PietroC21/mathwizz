@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "navbar.html" %}
+<body>
+    {% block content %}
+
+    {% if session.logged_in == False %}
+    <script>
+        window.location.href = "/login";
+    </script>
+
+    {% else %}
+    {% for name , problem in problems %}
+    <h1> User : {{ name }}</h1>
+    
+    {% if problem['Calculus'] %}
+    <table border="10">
+        <thead>
+            <td><h1>Calculus</h1></td>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>
+                    <h1>
+                        <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">{{ problem['Calculus'] | safe }}</math>
+                    </h1>
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    {% if problem['Algebra'] %}
+    <table border="10">
+        <thead>
+            <td><h1>Algebra</h1></td>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <h1>
+                        <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">{{ problem['Algebra'] | safe }}</math>
+                    </h1>
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    {% if problem['Geometry'] %}
+    <table border="10">
+        <thead>
+            <td><h1>Geometry</h1></td>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <h1>
+                        <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">{{ problem['Geometry'] | safe }}</math>
+                    </h1>
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% endfor %}
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

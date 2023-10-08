@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    {% extends "navbar.html" %}
+<body>
+
+{% block content %}
+<div class="container">
+    <div class ="row">
+        <div class="col-sm-12 py-4 text-center">
+        <h1 class="writing">Welcome to MathWizz!</h1>
+        <div class="d-flex justify-content-center align-items-center">
+          <div class="d-flex justify-content-center align-items-center">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th colspan="2"><h2 class="writing">View Profile</h2></th>
+            </tr>
+          </thead>
+                <tbody>
+                    {% for user in users.values() %}
+                    <tr>
+                        <td scope="row"><h2 class="writing">Username:</h2></td>
+                        <td><h2 class="writing">{{ user['Username'] }}</h2></td>
+                    </tr>
+                    <tr>
+                        <td scope="row"><h2 class="writing">Email:</h2></td>
+                        <td><h2 class="writing">{{ user['Email'] }}</h2></td>
+                    </tr>
+                    <tr>
+                      <td scope="row"><h2 class="writing">Age:</h2></td>
+                      <td><h2 class="writing">{{ user['Age'] }}</h2></td> 
+                    </tr>
+                    <tr>
+                      <td scope="row"><h2 class="writing">FirstName:</h2></td>
+                      <td><h2 class="writing">{{ user['FirstName'] }}</h2></td> 
+                    </tr>
+                    <tr>
+                      <td scope="row"><h2 class="writing">LastName:</h2></td>
+                      <td><h2 class="writing">{{ user['LastName'] }}</h2></td> 
+                    </tr>
+                    <tr>
+                      <td scope="row"><h2 class="writing"> UserType:</h2></td>
+                      <td><h2 class="writing">{{a}}</h2></td>
+                      
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table class="table table-bordered">
+          </div>
+{% endblock %}
+        </body>
+</html>

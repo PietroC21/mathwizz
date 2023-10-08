@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel ="stylesheet" href="{{ url_for('static', filename='styles.css')}}"> 
+  </head>
+  {% extends "navbar.html" %}
+  <body>
+    {% block content %}
+    
+    {% if session.logged_in %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Warning!</strong> {{message}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+    <div class="container">
+      <div class ="row">
+          <div class="col-sm-12 py-4 text-center">
+          <h1 class="writing">Welcome to MathWizz!</h1>
+          <div class="d-flex justify-content-center align-items-center">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th colspan="2"><h2 class="writing">View Profile</h2></th>
+              </tr>
+            </thead>
+                  <tbody>
+                      {% for user in users.values() %}
+                      <tr>
+                          <td scope="row"><h2 class="writing">Username:</h2></td>
+                          <td><h2 class="writing">{{ user['Username'] }}</h2></td>
+                      </tr>
+                      <tr>
+                          <td scope="row"><h2 class="writing">Email:</h2></td>
+                          <td><h2 class="writing">{{ user['Email'] }}</h2></td>
+                      </tr>
+                      <tr>
+                        <td scope="row"><h2 class="writing">Age:</h2></td>
+                        <td><h2 class="writing">{{ user['Age'] }}</h2></td> 
+                      </tr>
+                      <tr>
+                        <td scope="row"><h2 class="writing">FirstName:</h2></td>
+                        <td><h2 class="writing">{{ user['FirstName'] }}</h2></td> 
+                      </tr>
+                      <tr>
+                        <td scope="row"><h2 class="writing">LastName:</h2></td>
+                        <td><h2 class="writing">{{ user['LastName'] }}</h2></td> 
+                      </tr>
+                      <tr>
+                        <td scope="row"><h2 class="writing"> UserType:</h2></td>
+                        <td><h2 class="writing">{{a}}</h2></td>
+                        
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table class="table table-bordered">
+            </div>
+            {% if a=='Admin' %}
+            <form action="/viewallusers" method = "POST">
+              <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+              <div class="form-group">
+              <p class="writing">
+              <button type="submit"class="btn btn-primary btn-lg">View All Users</button></p>
+            </form>
+            <form action="/viewauser" method = "POST">
+              <div class="form-group">
+              <input type="hidden" name="csrf_token" value = "{{ csrf_token() }}"/>
+              <div class="form-group">
+                <p class="writing">
+                  <label for="Email"> Email of User to View:</label>
+                  <input type="email" name="Email"  placeholder="Enter Email of User">&#160;&#160;&#160;&#160;&#160;
+                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                    &#160;&#160;&#160;&#160;
+                </p>
+              </div>
+              </div>
+              <div class="form-group text-center">
+                <button type="submit"class="btn btn-primary btn-lg">View A User</button>&#160;&#160;&#160;&#160;
+              </div>
+          </form>
+            {% endif %}
+          </div>
+    {% else %}
+      <script>
+            window.location.href = "/login";
+        </script>
+    {% endif %}
+    {% endblock %}
+  </body>
+</html>
